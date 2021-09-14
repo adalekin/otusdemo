@@ -1,0 +1,45 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "affo.fullname" . }}
+  namespace: {{ include "affo.namespace" . }}
+  labels:
+    {{- include "affo.labels" . | nindent 4 }}
+spec:
+  hosts:
+  - affo.arch.homework
+  gateways:
+  - {{ include "affo.fullname" . }}-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /login/
+    - uri:
+        prefix: /logout/
+    - uri:
+        prefix: /user/
+    - uri:
+        prefix: /register/
+    route:
+    - destination:
+        port:
+          number: 80
+        host: {{ include "affo.fullname" . }}-users
+  - match:
+    - uri:
+        prefix: /account/
+    route:
+    - destination:
+        port:
+          number: 80
+        host: {{ include "affo.fullname" . }}-billing
+  - match:
+    - uri:
+        prefix: /
+    - uri:
+        prefix: /deeplinks/
+    route:
+    - destination:
+        port:
+          number: 80
+        host: {{ include "affo.fullname" . }}-deeplinks

@@ -1,0 +1,25 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "affo.fullname" . }}-jwt-authz-deeplinks
+  namespace: {{ include "affo.namespace" . }}
+  labels:
+    {{- include "affo.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: deeplinks
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        requestPrincipals: ["affo/users"]
+    to:
+    - operation:
+        paths: ["/*", "/deeplinks/"]
+  - from:
+    - source:
+        namespaces: [{{ include "affo.namespace" . }}]
+    to:
+    - operation:
+        paths: ["*"]

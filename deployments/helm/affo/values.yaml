@@ -1,0 +1,26 @@
+## @section PostgreSQL Parameters
+
+## PostgreSQL chart configuration
+## ref: https://github.com/bitnami/charts/blob/master/bitnami/postgresql/values.yaml
+##
+postgresql:
+  postgresqlDatabase: affo
+  postgresqlUsername: affo
+
+
+## @section Kafka Parameters
+
+## Kafka chart configuration
+## ref: https://github.com/bitnami/charts/blob/master/bitnami/kafka/values.yaml
+##
+kafka:
+  provisioning:
+    topics:
+      - event-fired
+
+
+## @section Cassandra Parameters
+
+## Cassandra chart configuration
+## ref: https://github.com/bitnami/charts/blob/master/bitnami/cassandra/values.yaml
+##

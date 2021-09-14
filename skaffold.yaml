@@ -1,0 +1,40 @@
+apiVersion: skaffold/v2beta19
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+    - image: affo/auth
+      context: py/
+      docker:
+        dockerfile: services/auth/Dockerfile
+    - image: affo/users
+      context: py/
+      docker:
+        dockerfile: services/users/Dockerfile
+    - image: affo/billing
+      context: py/
+      docker:
+        dockerfile: services/billing/Dockerfile
+    - image: affo/deeplinks
+      context: py/
+      docker:
+        dockerfile: services/deeplinks/Dockerfile
+    - image: affo/events
+      context: py/
+      docker:
+        dockerfile: services/events/Dockerfile
+deploy:
+  helm:
+    releases:
+      - name: affo
+        namespace: affo
+        chartPath: deployments/helm/affo
+        imageStrategy:
+          helm: {}
+        setValueTemplates:
+          image.tag: "{{ .DIGEST_HEX }}"
+        valuesFiles:
+          - examples/helm/affo/values.dev.yaml
+          - examples/helm/affo/secrets.dev.yaml
+        wait: true

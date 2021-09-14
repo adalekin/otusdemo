@@ -1,0 +1,16 @@
+global:
+  postgresql:
+    existingSecret: affo
+
+  jwt:
+    existingSecret: affo
+
+  cassandra:
+    dbUser:
+      existingSecret: affo
+
+cassandra:
+  dbUser:
+    user: cassandra
+    existingSecret: affo
+    forcePassword: true

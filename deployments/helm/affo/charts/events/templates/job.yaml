@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "events.fullname" . }}-migrations
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "events.labels" . | nindent 4 }}
+spec:
+  backoffLimit: 10
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+      labels:
+        {{- include "events.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["python"]
+          args: ["manage.py"]
+          envFrom:
+            - configMapRef:
+                name: affo-config
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "affo-kafka.{{ .Release.Namespace }}.svc.cluster.local:9092"
+            - name: CASSANDRA_CONTACT_POINTS
+              value: "affo-cassandra.{{ .Release.Namespace }}.svc.cluster.local"
+          {{- if .Values.global.cassandra.dbUser.existingSecret }}
+            - name: CASSANDRA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.cassandra.dbUser.existingSecret }}
+                  key: cassandra-password
+          {{- else }}
+            - name: CASSANDRA_PASSWORD
+              value: {{ .Values.global.cassandra.dbUser.password }}
+          {{- end }}
+      restartPolicy: OnFailure

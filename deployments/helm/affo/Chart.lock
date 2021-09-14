@@ -1,0 +1,30 @@
+dependencies:
+- name: auth
+  repository: ""
+  version: ~0.1.0
+- name: users
+  repository: ""
+  version: ~0.1.0
+- name: billing
+  repository: ""
+  version: ~0.1.0
+- name: deeplinks
+  repository: ""
+  version: ~0.1.0
+- name: events
+  repository: ""
+  version: ~0.1.0
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.9.5
+- name: kafka
+  repository: https://charts.bitnami.com/bitnami
+  version: 14.1.0
+- name: ksqldb
+  repository: ""
+  version: ~0.1.0
+- name: cassandra
+  repository: https://charts.bitnami.com/bitnami
+  version: 8.0.4
+digest: sha256:1f74edbd73075050ea665d8b0cbdddfcf5a7dcc695d517ad4cc9af6fb116b2ca
+generated: "2021-09-09T15:44:18.212975+03:00"

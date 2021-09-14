@@ -1,0 +1,19 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: {{ include "affo.fullname" . }}-jwt-authn
+  namespace: {{ include "affo.namespace" . }}
+  labels:
+    {{- include "affo.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      auth: bearer
+  jwtRules:
+  - issuer: "affo"
+    jwksUri: http://affo-auth.{{ .Release.Namespace }}.svc.cluster.local/jwks/
+    fromHeaders:
+      - name: Authorization
+        prefix: "Bearer "
+    outputPayloadToHeader: X-JWT-Payload
+    forwardOriginalToken: true

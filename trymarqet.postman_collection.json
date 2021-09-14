@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "2ea0b0cd-ac8a-414b-ab1c-bb5277cdadb5",
+		"name": "trymarqet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Follow a deeplink",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const sdk = require('postman-collection');",
+							"",
+							"var statusCode = pm.response.code;",
+							"",
+							"if (statusCode == 301) {",
+							"    var params = new sdk.Url(pm.response.headers.get('Location')).query.toObject()",
+							"    pm.collectionVariables.set(\"tid\", params.tid);",
+							"    pm.collectionVariables.set(\"cid\", params.cid);",
+							"    pm.collectionVariables.set(\"cn\", params.cn);",
+							"    pm.collectionVariables.set(\"ca\", params.ca);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{deeplinkUrl}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Create an order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {",
+							"  pm.response.to.have.status(201);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"paymentId\", jsonData.payment_id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Idempotency-Key",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"items\": [\n        {\n            \"product_id\": 1,\n            \"quantity\": 1\n        },\n        {\n            \"product_id\": 2,\n            \"quantity\": 1\n        }\n    ],\n    \"tid\": \"{{tid}}\",\n    \"cid\": \"{{cid}}\",\n    \"cn\": \"{{cn}}\",\n    \"ca\": \"{{ca}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirm a payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Idempotency-Key",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/payments/{{paymentId}}/confirm/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"payments",
+						"{{paymentId}}",
+						"confirm",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://trymarqet.arch.homework"
+		},
+		{
+			"key": "deeplinkUrl",
+			"value": ""
+		},
+		{
+			"key": "tid",
+			"value": ""
+		},
+		{
+			"key": "cid",
+			"value": ""
+		},
+		{
+			"key": "cn",
+			"value": ""
+		},
+		{
+			"key": "cs",
+			"value": ""
+		},
+		{
+			"key": "paymentId",
+			"value": ""
+		}
+	]
+}

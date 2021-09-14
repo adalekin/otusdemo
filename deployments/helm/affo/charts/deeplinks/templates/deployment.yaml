@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "deeplinks.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "deeplinks.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "deeplinks.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "deeplinks.selectorLabels" . | nindent 8 }}
+        app: {{ include "deeplinks.name" . }}
+        version: {{ include "deeplinks.appVersion" . }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: "{{ .Chart.Name }}-init"
+          image: "groundnuty/k8s-wait-for:1.3"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+          - "job"
+          - {{ include "deeplinks.fullname" . }}-migrations
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /liveness/
+              port: http
+          envFrom:
+            - configMapRef:
+                name: affo-config
+          env:
+            - name: EVENTS_URL
+              value: http://affo-events.{{ .Release.Namespace }}.svc.cluster.local
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "affo-kafka.{{ .Release.Namespace }}.svc.cluster.local:9092"
+            - name: CASSANDRA_CONTACT_POINTS
+              value: "affo-cassandra.{{ .Release.Namespace }}.svc.cluster.local"
+          {{- if .Values.global.cassandra.dbUser.existingSecret }}
+            - name: CASSANDRA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.cassandra.dbUser.existingSecret }}
+                  key: cassandra-password
+          {{- else }}
+            - name: CASSANDRA_PASSWORD
+              value: {{ .Values.global.cassandra.dbUser.password }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
