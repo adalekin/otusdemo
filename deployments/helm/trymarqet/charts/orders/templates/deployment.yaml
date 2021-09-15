@@ -48,12 +48,8 @@ spec:
             - configMapRef:
                 name: trymarqet-config
           env:
-            - name: AUTH_URL
-              value: http://trymarqet-auth.{{ .Release.Namespace }}.svc.cluster.local
-            - name: BILLING_URL
-              value: http://trymarqet-billing.{{ .Release.Namespace }}.svc.cluster.local
-            - name: KAFKA_BOOTSTRAP_SERVERS
-              value: "trymarqet-kafka.{{ .Release.Namespace }}.svc.cluster.local:9092"
+            - name: AFFO_URL
+              value: "http://affo-events.affo.svc.cluster.local"
             - name: REDIS_URL
               value: "redis://trymarqet-redis-master.{{ .Release.Namespace }}.svc.cluster.local:6379"
           {{- if .Values.global.postgresql.existingSecret }}
@@ -65,23 +61,6 @@ spec:
           {{- else }}
             - name: DB_PASSWORD
               value: {{ .Values.global.postgresql.postgresqlPassword }}
-          {{- end }}
-          {{- if .Values.global.jwt.existingSecret }}
-            - name: PRIVATE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.global.jwt.existingSecret }}
-                  key: jwt-private-key
-            - name: PUBLIC_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.global.jwt.existingSecret }}
-                  key: jwt-public-key
-            {{- else }}
-            - name: PRIVATE_KEY
-              value: {{ .Values.global.jwt.privateKey }}
-            - name: PUBLIC_KEY
-              value: {{ .Values.global.jwt.publicKey }}
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

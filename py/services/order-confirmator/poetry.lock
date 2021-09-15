@@ -1,4 +1,12 @@
 [[package]]
+name = "aiohealthcheck"
+version = "2018.7.1"
+description = "aiohealthcheck: super-simple TCP health-check endpoint"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "aiokafka"
 version = "0.7.2"
 description = "Kafka integration with asyncio."
@@ -218,9 +226,13 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "f1b7afe3706b5fcd09b07fe9ff107aef26d1eacd3c489463dc26f7a0000663b1"
+content-hash = "8becbfb4bfbdbabdca7d916c8b7d9982b339b0155db4b82e71cbdb03b3779f4d"
 
 [metadata.files]
+aiohealthcheck = [
+    {file = "aiohealthcheck-2018.7.1-py2.py3-none-any.whl", hash = "sha256:7b242832ddd053bee2fd67fd613c6d17c205331c935db01945901a108c8978fa"},
+    {file = "aiohealthcheck-2018.7.1.tar.gz", hash = "sha256:bbd9824c36e899df2ff38f9ba778edd23a58d9dab5b47fd49a0723a901492fc2"},
+]
 aiokafka = [
     {file = "aiokafka-0.7.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:b19f077e12fe23e359f7a7dca9baf8532c63f4c8149703ce4c56de372d17e26c"},
     {file = "aiokafka-0.7.2-cp36-cp36m-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:d801bb2f5a4ae726a433ae74a5d34e7e0d44128de53c9c7eea5cb4cdaaf80175"},

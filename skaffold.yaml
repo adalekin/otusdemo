@@ -24,6 +24,24 @@ build:
       context: py/
       docker:
         dockerfile: services/events/Dockerfile
+    - image: affo/stats-aggregator
+      context: py/
+      docker:
+        dockerfile: services/stats-aggregator/Dockerfile
+    - image: affo/stats
+      context: py/
+      docker:
+        dockerfile: services/stats/Dockerfile
+    - image: affo/revenue
+      context: py/
+      docker:
+        dockerfile: services/revenue/Dockerfile
+    - image: affo/ui-affo
+      context: ui/affo
+    - image: trymarqet/orders
+      context: py/
+      docker:
+        dockerfile: services/orders/Dockerfile
 deploy:
   helm:
     releases:
@@ -37,4 +55,15 @@ deploy:
         valuesFiles:
           - examples/helm/affo/values.dev.yaml
           - examples/helm/affo/secrets.dev.yaml
+        wait: true
+      - name: trymarqet
+        namespace: trymarqet
+        chartPath: deployments/helm/trymarqet
+        imageStrategy:
+          helm: {}
+        setValueTemplates:
+          image.tag: "{{ .DIGEST_HEX }}"
+        valuesFiles:
+          - examples/helm/trymarqet/values.dev.yaml
+          - examples/helm/trymarqet/secrets.dev.yaml
         wait: true

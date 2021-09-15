@@ -10,6 +10,7 @@ spec:
   - trymarqet.arch.homework
   gateways:
   - {{ include "trymarqet.fullname" . }}-gateway
+  http:
   - match:
     - uri:
         prefix: /orders/

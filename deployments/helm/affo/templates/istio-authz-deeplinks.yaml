@@ -16,7 +16,10 @@ spec:
         requestPrincipals: ["affo/users"]
     to:
     - operation:
-        paths: ["/*", "/deeplinks/"]
+        paths: ["/deeplinks/"]
+  - to:
+    - operation:
+        paths: ["/d/*"]
   - from:
     - source:
         namespaces: [{{ include "affo.namespace" . }}]

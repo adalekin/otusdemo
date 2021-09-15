@@ -31,7 +31,8 @@ RUN apk add --no-cache \
     libffi-dev \
     linux-headers \
     make \
-    openssl-dev
+    openssl-dev \
+    postgresql-dev
 
 # Installing Poetry
 RUN mkdir -p ${POETRY_HOME}
@@ -51,7 +52,8 @@ WORKDIR ${SERVICE_PATH}
 RUN apk add --no-cache \
     bash \
     libssl1.1 \
-    netcat-openbsd
+    netcat-openbsd \
+    postgresql-libs
 
 COPY services/${SERVICE_NAME}/ ${SERVICE_PATH}
 COPY --from=builder $VENV_PATH $VENV_PATH

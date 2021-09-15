@@ -48,6 +48,8 @@ spec:
             - configMapRef:
                 name: affo-config
           env:
+            - name: DEEPLINKS_BASE_URL
+              value: http://affo.arch.homework
             - name: EVENTS_URL
               value: http://affo-events.{{ .Release.Namespace }}.svc.cluster.local
             - name: KAFKA_BOOTSTRAP_SERVERS

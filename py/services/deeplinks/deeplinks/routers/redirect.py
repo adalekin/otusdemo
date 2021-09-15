@@ -8,7 +8,7 @@ from deeplinks.use_cases.redirect import hit_use_case
 router = APIRouter()
 
 
-@router.get("/{id}", tags=["redirect"])
+@router.get("/d/{id}", tags=["redirect"])
 async def redirect(id: str, request: Request):
     client_id = request.cookies.get("_cid") or uuid.uuid4().hex
 

@@ -8,18 +8,6 @@ postgresql:
   postgresqlUsername: trymarqet
 
 
-## @section Kafka Parameters
-
-## Kafka chart configuration
-## ref: https://github.com/bitnami/charts/blob/master/bitnami/kafka/values.yaml
-##
-kafka:
-  provisioning:
-    topics:
-      - user-registered
-      - order-completed
-
-
 ## @section Redis Parameters
 
 ## Redis chart configuration

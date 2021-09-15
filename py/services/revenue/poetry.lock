@@ -1,4 +1,12 @@
 [[package]]
+name = "aiohealthcheck"
+version = "2018.7.1"
+description = "aiohealthcheck: super-simple TCP health-check endpoint"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "aiokafka"
 version = "0.7.2"
 description = "Kafka integration with asyncio."
@@ -11,6 +19,17 @@ kafka-python = ">=2.0.0"
 
 [package.extras]
 snappy = ["python-snappy (>=0.5)"]
+
+[[package]]
+name = "aiorun"
+version = "2021.8.1"
+description = "Boilerplate for asyncio applications"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.extras]
+dev = ["pytest", "pytest-cov"]
 
 [[package]]
 name = "anyio"
@@ -218,9 +237,13 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "f1b7afe3706b5fcd09b07fe9ff107aef26d1eacd3c489463dc26f7a0000663b1"
+content-hash = "175ff1d7a1769ca74495c3e14550c9569f9c5db1dcf0e773e4c5f14bbceeeeca"
 
 [metadata.files]
+aiohealthcheck = [
+    {file = "aiohealthcheck-2018.7.1-py2.py3-none-any.whl", hash = "sha256:7b242832ddd053bee2fd67fd613c6d17c205331c935db01945901a108c8978fa"},
+    {file = "aiohealthcheck-2018.7.1.tar.gz", hash = "sha256:bbd9824c36e899df2ff38f9ba778edd23a58d9dab5b47fd49a0723a901492fc2"},
+]
 aiokafka = [
     {file = "aiokafka-0.7.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:b19f077e12fe23e359f7a7dca9baf8532c63f4c8149703ce4c56de372d17e26c"},
     {file = "aiokafka-0.7.2-cp36-cp36m-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:d801bb2f5a4ae726a433ae74a5d34e7e0d44128de53c9c7eea5cb4cdaaf80175"},
@@ -243,6 +266,10 @@ aiokafka = [
     {file = "aiokafka-0.7.2-cp39-cp39-win32.whl", hash = "sha256:a3bfe4ad7d3829a98c8391a9a28f179b47df4f66e26ea5b1c665f872b6e21809"},
     {file = "aiokafka-0.7.2-cp39-cp39-win_amd64.whl", hash = "sha256:6116b68ca975caafd7efd338ffdaec63789e1c334af6174e20edc1d16d14e463"},
     {file = "aiokafka-0.7.2.tar.gz", hash = "sha256:a8fc41d18731d8879483aecb93ae7ebf5457f63daf4c8923ddc046792c2c3096"},
+]
+aiorun = [
+    {file = "aiorun-2021.8.1-py3-none-any.whl", hash = "sha256:99c45ac4e53d82cf5d1afcb8d7f1855fd18d7774bd8590dbe4d6037e54c3a040"},
+    {file = "aiorun-2021.8.1.tar.gz", hash = "sha256:b3be8323dd2723f46d3e6cd691bcb7418cf895ca4e297c7f047183dbba67302d"},
 ]
 anyio = [
     {file = "anyio-3.3.1-py3-none-any.whl", hash = "sha256:d7c604dd491eca70e19c78664d685d5e4337612d574419d503e76f5d7d1590bd"},

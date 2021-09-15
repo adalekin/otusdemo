@@ -5,7 +5,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED 1
 # A service name to provide common Docker experiance
-ENV SERVICE_NAME=order-confirmator
+ENV SERVICE_NAME=revenue
 ENV SERVICE_PATH=/code/services/${SERVICE_NAME}/
 ENV VENV_PATH=${SERVICE_PATH}/.venv
 ENV PATH="$VENV_PATH/bin:$PATH"
@@ -58,4 +58,4 @@ COPY --from=builder $VENV_PATH $VENV_PATH
 
 RUN python -m venv $VENV_PATH
 
-CMD ["python", "-m", "revenue"]
+CMD ["python", "main.py"]

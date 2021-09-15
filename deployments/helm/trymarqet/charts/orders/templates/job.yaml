@@ -24,12 +24,8 @@ spec:
             - configMapRef:
                 name: trymarqet-config
           env:
-            - name: AUTH_URL
-              value: http://trymarqet-auth.{{ .Release.Namespace }}.svc.cluster.local
-            - name: BILLING_URL
-              value: http://trymarqet-billing.{{ .Release.Namespace }}.svc.cluster.local
-            - name: KAFKA_BOOTSTRAP_SERVERS
-              value: "trymarqet-kafka.{{ .Release.Namespace }}.svc.cluster.local:9092"
+            - name: AFFO_URL
+              value: "http://affo-events.affo.svc.cluster.local"
             - name: FLASK_APP
               value: orders.wsgi
           {{- if .Values.global.postgresql.existingSecret }}

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "revenue.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "revenue.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "revenue.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "revenue.selectorLabels" . | nindent 8 }}
+        app: {{ include "revenue.name" . }}
+        version: {{ include "revenue.appVersion" . }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: liveness-port
+              containerPort: 5000
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: liveness-port
+          envFrom:
+            - configMapRef:
+                name: affo-config
+          env:
+            - name: BILLING_URL
+              value: "http://affo-billing:8000"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "affo-kafka.{{ .Release.Namespace }}.svc.cluster.local:9092"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

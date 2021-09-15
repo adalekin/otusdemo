@@ -1,4 +1,7 @@
 dependencies:
+- name: ui
+  repository: ""
+  version: ~0.1.0
 - name: auth
   repository: ""
   version: ~0.1.0
@@ -14,6 +17,15 @@ dependencies:
 - name: events
   repository: ""
   version: ~0.1.0
+- name: stats
+  repository: ""
+  version: ~0.1.0
+- name: statsaggregator
+  repository: ""
+  version: ~0.1.0
+- name: revenue
+  repository: ""
+  version: ~0.1.0
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
   version: 10.9.5
@@ -26,5 +38,5 @@ dependencies:
 - name: cassandra
   repository: https://charts.bitnami.com/bitnami
   version: 8.0.4
-digest: sha256:1f74edbd73075050ea665d8b0cbdddfcf5a7dcc695d517ad4cc9af6fb116b2ca
-generated: "2021-09-09T15:44:18.212975+03:00"
+digest: sha256:e6a7ecf91b0be85ad5987589d2b8134218d7ad1e475a3a7632d8ae255ae78cf3
+generated: "2021-09-15T18:07:01.415802+03:00"

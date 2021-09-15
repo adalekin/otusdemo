@@ -50,4 +50,5 @@ Selector labels
 {{- define "deeplinks.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "deeplinks.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+auth: bearer
 {{- end }}

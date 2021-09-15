@@ -21,7 +21,7 @@
 							"    pm.collectionVariables.set(\"tid\", params.tid);",
 							"    pm.collectionVariables.set(\"cid\", params.cid);",
 							"    pm.collectionVariables.set(\"cn\", params.cn);",
-							"    pm.collectionVariables.set(\"ca\", params.ca);",
+							"    pm.collectionVariables.set(\"cs\", params.cs);",
 							"}",
 							""
 						],
@@ -49,9 +49,6 @@
 							"pm.test(\"Status code is 201\", () => {",
 							"  pm.response.to.have.status(201);",
 							"});",
-							"",
-							"var jsonData = JSON.parse(responseBody);",
-							"pm.collectionVariables.set(\"paymentId\", jsonData.payment_id);",
 							""
 						],
 						"type": "text/javascript"
@@ -69,7 +66,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"items\": [\n        {\n            \"product_id\": 1,\n            \"quantity\": 1\n        },\n        {\n            \"product_id\": 2,\n            \"quantity\": 1\n        }\n    ],\n    \"tid\": \"{{tid}}\",\n    \"cid\": \"{{cid}}\",\n    \"cn\": \"{{cn}}\",\n    \"ca\": \"{{ca}}\"\n}",
+					"raw": "{\n    \"items\": [\n        {\n            \"product_id\": 1,\n            \"quantity\": 1\n        },\n        {\n            \"product_id\": 2,\n            \"quantity\": 1\n        }\n    ],\n    \"tid\": \"{{tid}}\",\n    \"cid\": \"{{cid}}\",\n    \"cn\": \"{{cn}}\",\n    \"cs\": \"{{cs}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -83,55 +80,6 @@
 					],
 					"path": [
 						"orders",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Confirm a payment",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", () => {",
-							"  pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Idempotency-Key",
-						"value": "1",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/payments/{{paymentId}}/confirm/",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"payments",
-						"{{paymentId}}",
-						"confirm",
 						""
 					]
 				}

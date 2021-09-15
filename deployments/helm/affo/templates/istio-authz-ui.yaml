@@ -1,0 +1,16 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "affo.fullname" . }}-jwt-authz-ui
+  namespace: {{ include "affo.namespace" . }}
+  labels:
+    {{- include "affo.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: ui
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        paths: ["/", "/static/*"]

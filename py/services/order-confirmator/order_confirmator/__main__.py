@@ -1,6 +1,7 @@
 import asyncio
 import json
 
+import aiohealthcheck
 import httpx
 from aiokafka import AIOKafkaConsumer
 from schemas.payment import PaymentConfirmed
@@ -15,8 +16,11 @@ def _deserializer(serialized):
 async def _consume_payment_messages():
     client = httpx.AsyncClient()
     consumer = AIOKafkaConsumer(
-        "payment-confirmed", bootstrap_servers=settings.KAFKA_BOOTSTRAP_SERVERS, group_id=settings.KAFKA_GROUP_ID, value_deserializer=_deserializer,
-        auto_offset_reset='earliest'
+        "payment-confirmed",
+        bootstrap_servers=settings.KAFKA_BOOTSTRAP_SERVERS,
+        group_id=settings.KAFKA_GROUP_ID,
+        value_deserializer=_deserializer,
+        auto_offset_reset="earliest",
     )
 
     await consumer.start()
@@ -33,6 +37,7 @@ async def _consume_payment_messages():
 
 def main():
     loop = asyncio.get_event_loop()
+    loop.create_task(aiohealthcheck.tcp_health_endpoint(port=5000))
     loop.run_until_complete(_consume_payment_messages())
 
 

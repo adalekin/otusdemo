@@ -35,7 +35,7 @@ spec:
         host: {{ include "affo.fullname" . }}-billing
   - match:
     - uri:
-        prefix: /
+        prefix: /d/
     - uri:
         prefix: /deeplinks/
     route:
@@ -43,3 +43,27 @@ spec:
         port:
           number: 80
         host: {{ include "affo.fullname" . }}-deeplinks
+  - match:
+    - uri:
+        prefix: /events/
+    route:
+    - destination:
+        port:
+          number: 80
+        host: {{ include "affo.fullname" . }}-events
+  - match:
+    - uri:
+        prefix: /funnel/
+    route:
+    - destination:
+        port:
+          number: 80
+        host: {{ include "affo.fullname" . }}-stats
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 80
+        host: {{ include "affo.fullname" . }}-ui

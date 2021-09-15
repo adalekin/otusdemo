@@ -21,6 +21,12 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
+        - name: ksqldb-cli
+          image: "{{ .Values.image.registry }}/confluentinc/ksqldb-cli:latest"
+          command:
+            - sh
+            - -c
+            - "exec tail -f /dev/null"
         - name: {{ .Chart.Name }}
         {{- with .Values.imagePullSecrets }}
           imagePullSecrets:

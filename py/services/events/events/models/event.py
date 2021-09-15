@@ -9,7 +9,8 @@ class Event(Model):
 
     # Hit
     t = columns.Text(required=True)
-    partner_id = columns.Text(primary_key=True, required=True)
+    partner_id = columns.Integer(primary_key=True, required=True)
+    tid = columns.Text(required=True)
     cid = columns.Text(required=True)
     created_at = columns.DateTime(primary_key=True)
 

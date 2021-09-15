@@ -50,5 +50,4 @@ Selector labels
 {{- define "orders.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "orders.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-auth: bearer
 {{- end }}

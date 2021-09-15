@@ -10,8 +10,6 @@ paths:
         - orders
       summary: Create an order
       operationId: orders.api.orders.create
-      parameters:
-        - $ref: "#/components/parameters/JWTPayload"
       requestBody:
         content:
           application/json:
@@ -59,6 +57,14 @@ components:
             type: object
             $ref: "#/components/schemas/CreateOrderItem"
           description: List of order items
+        tid:
+          type: string
+        cid:
+          type: string
+        cn:
+          type: string
+        cs:
+          type: string
 
     CreateOrderItem:
       type: object

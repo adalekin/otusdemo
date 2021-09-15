@@ -24,3 +24,10 @@ kafka:
 ## Cassandra chart configuration
 ## ref: https://github.com/bitnami/charts/blob/master/bitnami/cassandra/values.yaml
 ##
+
+## ksqlDB
+##
+ksqldb:
+  kafka:
+    bootstrapServers:
+      - affo-kafka:9092

@@ -18,7 +18,7 @@ def _auth_api(path):
 class IssueAccessToken(Step):
     def execute(self, state):
         response = AUTH_SESSION.post(
-            _auth_api("/jwt/encode/"), json={"iss": "trymarqet", "sub": "users", "payload": {"user_id": state["user"].id}}
+            _auth_api("/jwt/encode/"), json={"iss": "affo", "sub": "users", "payload": {"user_id": state["user"].id}}
         )
         response.raise_for_status()
 

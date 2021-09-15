@@ -1,0 +1,22 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "affo.fullname" . }}-jwt-authz-events
+  namespace: {{ include "affo.namespace" . }}
+  labels:
+    {{- include "affo.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: events
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        paths: ["/events/"]
+  - from:
+    - source:
+        namespaces: [{{ include "affo.namespace" . }}]
+    to:
+    - operation:
+        paths: ["*"]

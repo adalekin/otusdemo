@@ -50,4 +50,5 @@ Selector labels
 {{- define "events.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "events.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+auth: bearer
 {{- end }}

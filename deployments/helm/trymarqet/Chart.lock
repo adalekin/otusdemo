@@ -1,0 +1,12 @@
+dependencies:
+- name: orders
+  repository: ""
+  version: ~1.0.0
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.9.5
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 15.3.2
+digest: sha256:fdefe5a6605cab7dafccbd81e7420d900a0efedcb3243f47676131f3ffcff13c
+generated: "2021-09-15T03:55:56.615029+03:00"

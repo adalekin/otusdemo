@@ -7,7 +7,7 @@ import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 
 from . import settings
-from .extensions import db, idempotency, kafka, marshmallow, migrate
+from .extensions import db, idempotency, marshmallow, migrate
 
 __all__ = ["create_app"]
 
@@ -36,7 +36,6 @@ def create_app(settings_override=None):
     # Flask-SQLAlchemy must be initialized before Flask-Marshmallow.
     db.init_app(application)
     idempotency.init_app(application)
-    kafka.init_app(application)
     marshmallow.init_app(application)
     migrate.init_app(application, db, version_table="orders-versions")
 

@@ -7,7 +7,8 @@ from pydantic import BaseModel
 class EventFired(BaseModel):
     # Hit
     t: str
-    partner_id: str
+    partner_id: int
+    tid: str
     cid: str
     created_at: datetime.datetime
 
